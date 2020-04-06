@@ -18,7 +18,8 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'core'
+    'core',
+    'crispy_forms'
 ]
 
 MIDDLEWARE = [
@@ -45,6 +46,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'libraries':{'cart_template_tags': 'core.cart_template_tags.cart_template_tags', }
         },
     },
 ]
@@ -107,4 +109,7 @@ AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend',
 
 )
+LOGIN_REDIRECT_URL = "/"
 SITE_ID = 1
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
