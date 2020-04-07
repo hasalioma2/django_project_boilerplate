@@ -1,0 +1,97 @@
+{% extends "base.html" %} {% block content %}
+<main class="mt-5 pt-4">
+  <div class="container mt-5">
+    <h2 class="text-center">Order Summary</h2>
+    <div class="table-responsive text-nowrap">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th scope="col">Item Title</th>
+            <th scope="col">Price</th>
+            <th scope="col">
+              Quantity
+            </th>
+            <th scope="col">Total Item Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for order_item in object.items.all %}
+          <tr>
+            <th scope="row">{{ forloop.counter }}</th>
+            <td>{{ order_item.item.title }}</td>
+            <td>Ksh {{ order_item.item.price }}</td>
+            <td>
+              <a
+                href="{% url 'core:remove-single-item-from-cart' order_item.item.slug %}"
+              >
+                <i class="fas fa-minus"></i>
+              </a>
+              {{ order_item.quantity }}
+              <a href="{% url 'core:add-to-cart' order_item.item.slug %}">
+                <i class="fas fa-plus"></i>
+              </a>
+            </td>
+            <td>
+              Ksh {% if order_item.item.discount_price %}
+              {{order_item.get_total_item_discount_price }}
+
+              <span class="badge badge-primary"
+                >Saving Ksh {{ order_item.get_amount_saved }}</span
+              >
+
+              {% else %} {{order_item.get_total_item_price }} {% endif %}
+              <a href="{% url 'core:remove-from-cart' order_item.item.slug %}">
+                <i class="fas fa-trash float-right" style="color: red;"></i>
+              </a>
+            </td>
+          </tr>
+          {% endfor %} {% if order_item %}
+          <tr>
+            <td colspan="5">Your Cart is empty</td>
+          </tr>
+          <tr>
+            <td colspan="5">
+              <b>
+                <a class="btn btn-warning mr-2 float-right" href="/"
+                  >Continue Shopping</a
+                >
+              </b>
+            </td>
+          </tr>
+          {% endif %} {% if object.get_total %}
+          <tr>
+            <td colspan="4"><b>Cart Total</b></td>
+            <td>
+              <b
+                >Ksh {{ object.get_total }}
+                <span class="badge badge-primary"
+                  >Total Save Ksh {{ object.get_total_saved }}</span
+                >
+              </b>
+            </td>
+          </tr>
+
+          <tr>
+            <td colspan="5">
+              <b>
+                <a
+                  class="btn btn-info float-right"
+                  href="{% url 'core:checkout' %}"
+                  >Checkout</a
+                >
+              </b>
+              <b>
+                <a class="btn btn-warning mr-2 float-right" href="/"
+                  >Continue Shopping</a
+                >
+              </b>
+            </td>
+          </tr>
+          {% endif %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</main>
+{% endblock content %}

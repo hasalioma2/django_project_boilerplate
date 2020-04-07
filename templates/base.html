@@ -48,23 +48,16 @@
         <!-- Links -->
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <!-- Left -->
-          <ul class="navbar-nav mr-auto">
-            <!-- <li class="nav-item active">
-              <a class="nav-link waves-effect" href="/product"
-                >Product
-                <span class="sr-only">(current)</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link waves-effect" href="/checkout">checkout</a>
-            </li> -->
-          </ul>
+          <ul class="navbar-nav mr-auto"></ul>
 
           <!-- Right -->
           <ul class="navbar-nav nav-flex-icons mr-5">
             {% if user.is_authenticated %}
             <li class="nav-item">
-              <a class="nav-link waves-effect">
+              <a
+                href="{% url 'core:order-summary' %}"
+                class="nav-link waves-effect"
+              >
                 <span class="badge red z-depth-1 mr-1">
                   {{ request.user| cart_item_count }}
                 </span>
@@ -129,7 +122,8 @@
       {% endfor %} {% endif %}
       <!-- end messages -->
     </div>
-    {% block content %} {% endblock content %} {% block extra_body %} {%endblock extra_body %}
+    {% block content %} {% endblock content %} 
+    {% block extra_body %} {% endblock extra_body %}
 
     <!--Footer-->
     <footer class="page-footer text-center font-small mt-4 wow fadeIn">
