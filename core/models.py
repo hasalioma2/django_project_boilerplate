@@ -1,18 +1,20 @@
 from django.db import models
 from django.conf import settings
 from django.shortcuts import reverse
-
+# branches as a dropdown list.
 CATEGORY_CHOICES = (
     ('S', 'Shirt'),
     ('SW', 'Sport Wear'),
     ('OW', 'Out Wear')
 )
-
+# Either Asset or miscelenious
 LABEL_CHOICES = (
     ('P', 'primary'),
     ('S', 'secondary'),
     ('D', 'danger')
 )
+
+# this will be the Items Already in the system.
 
 
 class Item(models.Model):
@@ -42,6 +44,8 @@ class Item(models.Model):
             "slug": self.slug
         })
 
+# This will be the items to be Shipped to the branch
+
 
 class OrderItem(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
@@ -69,6 +73,8 @@ class OrderItem(models.Model):
         if self.item.discount_price:
             return self.get_total_item_discount_price()
         return self.get_total_item_price()
+
+# This will consist of the delivery note.
 
 
 class Order(models.Model):
